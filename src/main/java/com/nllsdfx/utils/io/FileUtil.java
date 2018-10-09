@@ -73,6 +73,8 @@ public final class FileUtil {
     }
 
     /**
+     * @param path path to dir
+     * @return true if created, false otherwise
      * @see #createDir(String)
      */
     public static boolean createDir(Path path) {

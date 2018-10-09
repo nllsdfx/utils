@@ -35,6 +35,7 @@ public interface Property {
      *
      * @param key   key to write.
      * @param value value to write.
+     * @return true if writing was successful, false otherwise
      */
     boolean set(String key, String value);
 
@@ -44,6 +45,7 @@ public interface Property {
      * If value of a key is null, does nothing.
      *
      * @param map key-value pairs to set to a property.
+     * @return true if writing was successful, false otherwise.
      */
     boolean set(Map<String, String> map);
 

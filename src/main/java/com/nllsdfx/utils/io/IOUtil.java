@@ -56,10 +56,10 @@ public final class IOUtil {
     /**
      * Flushes and close object.
      *
-     * @param object object that implements both
-     *               {@link Closeable} and
-     *               {@link Flushable} object.
-     * @param <T>    closeable & flushable object.
+     * @param object  object that implements both
+     *                {@link Closeable} and
+     *                {@link Flushable} object.
+     * @param <T></T> closeable & flushable object.
      */
     public static <T extends Closeable & Flushable> void closeWithFlush(final T object) {
         if (object != null) {
