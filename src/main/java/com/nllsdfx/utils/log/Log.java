@@ -15,29 +15,37 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.nllsdfx.utils.property;
+package com.nllsdfx.utils.log;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-/**
- * Use this class to access properties outside your project,
- * or, simply saying, outside your war/jar.
- */
-public final class SystemProperty extends AbstractProperty {
+public final class Log {
 
-    public SystemProperty(String fileName) {
-        super(fileName);
+    private Logger logger;
+
+    private Log(Class<?> c) {
+        logger = Logger.getLogger(c.getName());
     }
 
-    @Override
-    protected void init() {
-        try (InputStream is = Files.newInputStream(Paths.get(fileName))) {
-            properties.load(is);
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
+    public void error(Throwable t) {
+        logger.log(Level.SEVERE, t.getLocalizedMessage());
     }
+
+    public void error(String msg) {
+        logger.log(Level.SEVERE, msg);
+    }
+
+    public void debug(Throwable t) {
+        logger.log(Level.FINE, t.getLocalizedMessage());
+    }
+
+    public void debug(String msg) {
+        logger.log(Level.FINE, msg);
+    }
+
+    public static Log getLogger(Class<?> c) {
+        return new Log(c);
+    }
+
 }

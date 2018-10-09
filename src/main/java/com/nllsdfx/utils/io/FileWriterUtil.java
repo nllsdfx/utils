@@ -15,29 +15,45 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.nllsdfx.utils.property;
+package com.nllsdfx.utils.io;
+
+
+import com.nllsdfx.utils.log.Log;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 
 /**
- * Use this class to access properties outside your project,
- * or, simply saying, outside your war/jar.
+ * Util to write files.
  */
-public final class SystemProperty extends AbstractProperty {
+public final class FileWriterUtil {
 
-    public SystemProperty(String fileName) {
-        super(fileName);
+    private static Log log = Log.getLogger(FileWriterUtil.class);
+
+    private FileWriterUtil() {
     }
 
-    @Override
-    protected void init() {
-        try (InputStream is = Files.newInputStream(Paths.get(fileName))) {
-            properties.load(is);
+    /**
+     * Standard file write operation. This method
+     * works as if the {@link StandardOpenOption#CREATE CREATE}
+     *
+     * @param file    path to file.
+     * @param content content to be written.
+     * @return path of the written file, or {@code null} if
+     * exception occurred.
+     */
+    public static Path writeFile(final Path file, final String content) {
+
+        Path path = null;
+
+        try {
+            path = Files.write(file, content.getBytes());
         } catch (IOException ex) {
-            throw new RuntimeException(ex);
+            log.error(ex);
         }
+
+        return path;
     }
 }

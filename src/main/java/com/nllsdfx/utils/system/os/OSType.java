@@ -15,29 +15,10 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.nllsdfx.utils.property;
+package com.nllsdfx.utils.system.os;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
-/**
- * Use this class to access properties outside your project,
- * or, simply saying, outside your war/jar.
- */
-public final class SystemProperty extends AbstractProperty {
-
-    public SystemProperty(String fileName) {
-        super(fileName);
-    }
-
-    @Override
-    protected void init() {
-        try (InputStream is = Files.newInputStream(Paths.get(fileName))) {
-            properties.load(is);
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
-    }
+public enum OSType {
+    WINDOWS,
+    MAC,
+    UNIX
 }
