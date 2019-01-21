@@ -17,12 +17,17 @@
 
 package com.nllsdfx.utils.commons;
 
+import javax.xml.bind.DatatypeConverter;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.regex.Pattern;
 
 /**
  * Useful tools for string class.
  */
 public final class StringUtil {
+
+    private static final Pattern NUMERIC_PATTERN = Pattern.compile("-?\\d+(\\.\\d+)?");
 
     private StringUtil() {
     }
@@ -65,7 +70,7 @@ public final class StringUtil {
      * false otherwise.
      */
     public static boolean isNumeric(final String string) {
-        return !isBlank(string) && string.matches("-?\\d+(\\.\\d+)?");
+        return !isBlank(string) && NUMERIC_PATTERN.matcher(string).matches();
     }
 
     /**
@@ -78,8 +83,26 @@ public final class StringUtil {
      * @throws NullPointerException if string is null
      */
     public static String firstToLowerCase(final String string) {
-        char c[] = string.toCharArray();
+        char[] c = string.toCharArray();
         c[0] = Character.toLowerCase(c[0]);
         return new String(c);
+    }
+
+
+    /**
+     * Converts string to hexadecimal format.
+     *
+     * @param text text to convert
+     * @return hexadecimal representation of string.
+     */
+    public static String toHexadecimal(final String text) {
+
+        if (isBlank(text)) {
+            return null;
+        }
+
+        byte[] myBytes = text.getBytes(StandardCharsets.UTF_8);
+
+        return DatatypeConverter.printHexBinary(myBytes);
     }
 }
